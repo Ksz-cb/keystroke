@@ -4,14 +4,10 @@ import time
 t = time.time()
 
 def callb(key): #What to do on key-release
-	global t
-	ti1 = str(time.time() - t )[0:5] #converting float to str, slicing the float
+	global t	#tmp sie zmienia w tym miejscu na bierzaco
+	ti1 = str(time.time() - t)[0:5] #converting float to str, slicing the float
 	print('The key',key,'is pressed for',ti1,'seconds')
-
-	print(t)	#t sie nie zmienia
-	tmp = time.time()	#tmp sie zmienia w tym miejscu na bierzaco
-	t = tmp
-	print(tmp)			#ale ti1 uzywa t wiec nie mozna znowu przypisywac tu niczego do t
+	t = time.time()
 
 	#return False		#stop detecting more key-releases
 	
