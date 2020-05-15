@@ -1,25 +1,46 @@
-from pynput import keyboard #pip3 install pynput
+from pynput.keyboard import Key, Listener
 import time
 
-ti2 = 0
 
-while True:
+def callb(key): 		#What to do on key-release
+    t = time.time()
+    if key != Key.enter:
+        print('The key', key, 'hold', t)
+        keyPressData.append("{0}-{1}".format(key,t))
 
-	def callb(key): 		#What to do on key-release
-		global ti2
-		ti1 = str(time.time() - t )[0:5] #converting float to str, slicing the float
-		print('The key',key,'is pressed for',ti1,'seconds')
-		ti2 = time.time()
-		return False 		#stop detecting more key-releases
-	def callb1(key):		#What to do on key-press
-		return False		#stop detecting more key-presses
 
-	with keyboard.Listener(on_press = callb1) as listener1:	#setting code for listening key-press
-		listener1.join()
+def callb1(key):
+    t = time.time()
+    if key != Key.enter:
+        print('The key', key, 'hold', t)
+        keyReleaseData.append("{0}-{1}".format(key,t))
+    else:
+        return False		#stop detecting more key-presses
 
-	t = time.time()
-	czas2 = str(t - ti2)[0:6] # flight time latency - czas miedzy puszczeniem 1 klawisza a wcisnieciem nastepnego
-	print("Flight time:", czas2)
 
-	with keyboard.Listener(on_release = callb) as listener:	#setting code for listening key-release
-		listener.join()
+
+def digraphtime(keypress, keyrelease):
+    keyPress = [float(times.split('-')[1]) for times in keypress]
+    keyRelease = [float(times.split('-')[1]) for times in keyrelease]
+
+    return [i - j for i, j in zip(keyRelease[1:], keyPress[:-1])]
+
+keyPressData = []
+keyReleaseData = []
+text=["czesc jestem"]
+
+print(text)
+with Listener(on_press=callb, on_release=callb1) as listener:
+    listener.join()
+
+print(keyPressData)
+print(keyReleaseData)
+
+keyPressData2 = [float(data.split('-')[1]) for data in keyPressData]
+keyReleaseData2 = [float(times.split('-')[1]) for times in keyReleaseData]
+print(keyPressData2)
+print(keyReleaseData2)
+x = list(zip(keyReleaseData2[1:], keyPressData2[:-1]))
+print(x)
+print(digraphtime(keyPressData, keyReleaseData))
+
