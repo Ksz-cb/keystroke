@@ -15,5 +15,6 @@ print("1. Stworz nowy profil. (Pamietaj, jest to dlugi proces.)")
 wybor = int(input("\nPowiedz nam co chcesz zrobic: "))
 
 if wybor == 1:
+    clear_screen()
     exec(open("./test.py").read())
 
