@@ -23,6 +23,11 @@ def callb1(key):
         return False		#stop detecting more key-presses
 
 
+def digraphletters(keypress, keyrelease):
+    keyPressLetter = [letter.split('-')[0] for letter in keypress]
+    keyReleaseLetter = [letter.split('-')[0] for letter in keyrelease]
+    return [i + j for i, j in zip(keyReleaseLetter[1:], keyPressLetter[:-1])]
+
 def digraphtime(keypress, keyrelease):
     keyPress = [float(times.split('-')[1]) for times in keypress]
     keyRelease = [float(times.split('-')[1]) for times in keyrelease]
@@ -57,12 +62,13 @@ for textlist in text:
 print(keyPressData)
 print(keyReleaseData)
 #print(dell(keyPressData))
-print(dataProcessKeyPress(keyPressData))
+#print(dataProcessKeyPress(keyPressData))
+print(digraphletters(keyPressData, keyReleaseData))
 keyPressData2 = [float(data.split('-')[1]) for data in keyPressData]
 keyReleaseData2 = [float(times.split('-')[1]) for times in keyReleaseData]
 #print(keyPressData2)
 #print(keyReleaseData2)
 #x = list(zip(keyReleaseData2[1:], keyPressData2[:-1]))
 #print(x)
-#print(digraphtime(keyPressData, keyReleaseData))
+print(digraphtime(keyPressData, keyReleaseData))
 
