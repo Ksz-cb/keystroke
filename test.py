@@ -29,33 +29,35 @@ def digraphtime(keypress, keyrelease):
 
     return [i - j for i, j in zip(keyRelease[1:], keyPress[:-1])]
 
-def dell(keypress):
-    for index in enumerate(keypress):
-        if keypress[index] == Key.shift:
-            del keypress[index]
-            return (keyPressData)
-    return (keypress)
+def dataProcessKeyPress(keyPress):
+    # remove backspace and the key for which it was used
+    for index, data in enumerate(keyPress):
+        if data.split('-')[0] == 'Key.backspace':
+            keyPress = [j for i, j in enumerate(keyPress) if i not in (index, index - 1)]
+            keyPress = dataProcessKeyPress(keyPress)
+            return keyPress
+    return keyPress
 
 keyPressData = []
 keyReleaseData = []
-text = ["Jak glosi wielkie przyslowie, Nie ma nik",
-      "ogo, kto lubilby bol dla samego bolu, szu",
-      "kal go tylko po to, by go poczuc, po pros",
-      "tu dlatego, ze to bol cos cos cos cos cos"]
+text = ["Jak"]
 
 i=1
 for textlist in text:
     print("Entry", i, "text: ")
     print(textlist)
     with Listener(on_press=callb, on_release=callb1) as listener:
+        x = input()
         listener.join()
     i += 1
+    x=0
     #print('\n' * 80)
     clear_screen()
 
 print(keyPressData)
 print(keyReleaseData)
 #print(dell(keyPressData))
+print(dataProcessKeyPress(keyPressData))
 keyPressData2 = [float(data.split('-')[1]) for data in keyPressData]
 keyReleaseData2 = [float(times.split('-')[1]) for times in keyReleaseData]
 #print(keyPressData2)
