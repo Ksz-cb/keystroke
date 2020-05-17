@@ -15,11 +15,23 @@ print("1. Stworz nowy profil. (Pamietaj, jest to dlugi proces.)")
 wybor = int(input("\nPowiedz nam co chcesz zrobic: "))
 
 if wybor == 1:
+    name = input("\n Podaj nazwe profilu: ")
+    while True:
+        #creating folder
+        try:
+            os.makedirs(name)
+            os.chdir(name)
+            break
+        except FileExistsError:
+            print ("Istnieje profil o tej nazwie, wybierz inna: ")
+            name = input("\n Podaj nazwe profilu: ")
+
     clear_screen()
-    exec(open("./test.py").read())
+    exec(open("../test.py").read())
 
 for x in range (5):
     print(x)
     f=open("{}.txt".format(x), "w")
     f.write(str(x))
     f.close()
+
