@@ -17,7 +17,6 @@ wybor = int(input("\nPowiedz nam co chcesz zrobic: "))
 if wybor == 1:
     name = input("\n Podaj nazwe profilu: ")
     while True:
-        #creating folder
         try:
             os.makedirs(name)
             os.chdir(name)
@@ -34,4 +33,3 @@ for x in range (5):
     f=open("{}.txt".format(x), "w")
     f.write(str(x))
     f.close()
-

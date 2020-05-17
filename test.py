@@ -51,6 +51,7 @@ i=1
 for textlist in text:
     print("Entry", i, "text: ")
     print(textlist)
+    os.makedirs("here") # jak tu cokolwiek sie dzieje po wywołaniu menu.py to bedzie tworzyc w folderze tworzonym z menu. :D
     with Listener(on_press=callb, on_release=callb1) as listener:
         x = input()
         listener.join()
