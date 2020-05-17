@@ -18,3 +18,8 @@ if wybor == 1:
     clear_screen()
     exec(open("./test.py").read())
 
+for x in range (5):
+    print(x)
+    f=open("{}.txt".format(x), "w")
+    f.write(str(x))
+    f.close()
