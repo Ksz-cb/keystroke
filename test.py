@@ -58,13 +58,14 @@ def makefile(keypress, keyrelease):
 
 keyPressData = []
 keyReleaseData = []
-text = ["Jakaka"]
+#text = ["Jakaka"]
+#TextDokumentowy = 
+
 
 i=1
-for textlist in text:
+for textlist in open('../textEXMPL.txt', 'r').readlines():
     print("Entry", i, "text: ")
     print(textlist)
-    os.makedirs("here") # jak tu cokolwiek sie dzieje po wywołaniu menu.py to bedzie tworzyc w folderze tworzonym z menu. :D
     with Listener(on_press=callb, on_release=callb1) as listener:
         x = input()
         listener.join()
