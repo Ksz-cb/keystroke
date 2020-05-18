@@ -56,8 +56,7 @@ def makefile(keypress, keyrelease):
             f.write(str(digraphTime[i]))
 
 
-keyPressData = []
-keyReleaseData = []
+
 #text = ["Jakaka"]
 #TextDokumentowy = 
 
@@ -66,6 +65,8 @@ i=1
 for textlist in open('../textEXMPL.txt', 'r').readlines():
     print("Entry", i, "text: ")
     print(textlist)
+    keyPressData = []
+    keyReleaseData = []
     with Listener(on_press=callb, on_release=callb1) as listener:
         x = input()
         listener.join()
