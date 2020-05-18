@@ -18,7 +18,7 @@ def callb1(key):
 
     if key != Key.enter:
         #print('The key', key, 'hold', t)
-        keyReleaseData.append("{0}-{1}".format(key,t))
+        keyReleaseData.append("{0}-{1}".format(str(key), t))
     else:
         return False		#stop detecting more key-presses
 
@@ -26,7 +26,8 @@ def callb1(key):
 def digraphletters(keypress, keyrelease):
     keyPressLetter = [letter.split('-')[0] for letter in keypress]
     keyReleaseLetter = [letter.split('-')[0] for letter in keyrelease]
-    return [i + j for i, j in zip(keyReleaseLetter[1:], keyPressLetter[:-1])]
+    y = [j + i for i, j in zip(keyReleaseLetter[1:], keyPressLetter[:-1])]
+    return [''.join(e for e in string if e.isalnum()) for string in y]
 
 def digraphtime(keypress, keyrelease):
     keyPress = [float(times.split('-')[1]) for times in keypress]
@@ -34,18 +35,30 @@ def digraphtime(keypress, keyrelease):
 
     return [i - j for i, j in zip(keyRelease[1:], keyPress[:-1])]
 
-def dataProcessKeyPress(keyPress):
-    # remove backspace and the key for which it was used
-    for index, data in enumerate(keyPress):
-        if data.split('-')[0] == 'Key.backspace':
-            keyPress = [j for i, j in enumerate(keyPress) if i not in (index, index - 1)]
-            keyPress = dataProcessKeyPress(keyPress)
-            return keyPress
-    return keyPress
+def backspaceKeys(keyPreRe):
+    for index, keys in enumerate(keyPreRe):
+        if keys.split('-')[0] == 'Key.backspace':
+            keyPreRe = [j for i, j in enumerate(keyPreRe) if i not in (index, index - 1)]
+            keyPreRe = backspaceKeys(keyPreRe)
+            return keyPreRe
+    return keyPreRe
+
+def makefile(keypress, keyrelease):
+    keypress2 = backspaceKeys(keypress)
+    keyrelease2 = backspaceKeys(keyrelease)
+    digraphLetters = digraphletters(keypress2, keyrelease2)
+    digraphTime = digraphtime(keypress2,keyrelease2)
+    for i in range(len(digraphTime)):
+        f = open("{}.txt".format(digraphLetters[i]), "a")
+        if os.path.getsize("{}.txt".format(digraphLetters[i])) > 0:
+            f.write("\n" + str(digraphTime[i]))
+        else:
+            f.write(str(digraphTime[i]))
+
 
 keyPressData = []
 keyReleaseData = []
-text = ["Jak"]
+text = ["Jakaka"]
 
 i=1
 for textlist in text:
@@ -56,20 +69,12 @@ for textlist in text:
         x = input()
         listener.join()
     i += 1
-    x=0
-    #print('\n' * 80)
+    x=''
     clear_screen()
+    print(keyPressData)
+    print(keyReleaseData)
+    print(digraphtime(keyPressData, keyReleaseData))
+    print(digraphletters(keyPressData, keyReleaseData))
+    makefile(keyPressData, keyReleaseData)
 
-print(keyPressData)
-print(keyReleaseData)
-#print(dell(keyPressData))
-#print(dataProcessKeyPress(keyPressData))
-print(digraphletters(keyPressData, keyReleaseData))
-keyPressData2 = [float(data.split('-')[1]) for data in keyPressData]
-keyReleaseData2 = [float(times.split('-')[1]) for times in keyReleaseData]
-#print(keyPressData2)
-#print(keyReleaseData2)
-#x = list(zip(keyReleaseData2[1:], keyPressData2[:-1]))
-#print(x)
-print(digraphtime(keyPressData, keyReleaseData))
 
