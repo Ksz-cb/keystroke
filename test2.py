@@ -1,9 +1,10 @@
+from scipy.stats import norm
+import numpy as np
+import matplotlib.pyplot as plt
 from pynput.keyboard import Key, Listener
 import time
 import os
 
-def clear_screen():
-    os.system('cls' if os.name == 'nt' else 'clear')
 
 def callb(key): 		#What to do on key-release
     t = time.time()
@@ -43,22 +44,23 @@ def backspaceKeys(keyPreRe):
             return keyPreRe
     return keyPreRe
 
-def makefile(keypress, keyrelease):
+def authenticate(keypress, keyrelease):
     keypress2 = backspaceKeys(keypress)
     keyrelease2 = backspaceKeys(keyrelease)
     digraphLetters = digraphletters(keypress2, keyrelease2)
     digraphTime = digraphtime(keypress2,keyrelease2)
     for i in range(len(digraphTime)):
-        f = open("{}.txt".format(digraphLetters[i]), "a")
-        if os.path.getsize("{}.txt".format(digraphLetters[i])) > 0:
-            f.write("\n" + str(digraphTime[i]))
-        else:
-            f.write(str(digraphTime[i]))
+        for fname in os.listdir('./adam'):
+            if digraphLetters[i] in fname:
+                data_file = open(filepath, 'r')
+                data1 = []
+                for line in data_file:
+                    data1.extend([float(i) for i in line.split()])
 
 
 
 #text = ["Jakaka"]
-#TextDokumentowy = 
+#TextDokumentowy =
 
 
 i=1
@@ -72,11 +74,36 @@ for textlist in open('./textEXMPL.txt', 'r').readlines():
         listener.join()
     i += 1
     x=''
-    clear_screen()
     print(keyPressData)
     print(keyReleaseData)
     print(digraphtime(keyPressData, keyReleaseData))
     print(digraphletters(keyPressData, keyReleaseData))
-    makefile(keyPressData, keyReleaseData)
+    authenticate(keyPressData, keyReleaseData)
 
+filepath = "./adam/ak.txt"
+
+exam_data_file = open(filepath, 'r')
+exam_data1 = []
+
+for line in exam_data_file:
+    exam_data1.extend([float(i) for i in line.split()])
+
+print(exam_data1)
+
+print(np.mean(exam_data1))
+print(np.std(exam_data1))
+
+mu = np.mean(exam_data1)
+sigma = np.std(exam_data1)
+
+s = np.random.normal(mu, sigma, 1000)
+
+print(abs(mu - np.mean(s)) < 0.01)
+print(abs(sigma - np.std(s, ddof=1)) < 0.01)
+
+count, bins, ignored = plt.hist(s, 30, density=True)
+plt.plot(bins, 1/(sigma * np.sqrt(2 * np.pi)) *
+             np.exp( - (bins - mu)**2 / (2 * sigma**2) ),
+       linewidth=2, color='r')
+plt.show()
 
