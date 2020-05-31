@@ -5,11 +5,10 @@ import time
 import os
 
 
-def callb(key): 		#What to do on key-release
+def callb(key):
     t = time.time()
 
     if key != Key.enter:
-        #print('The key', key, 'hold', t)
         keyPressData.append("{0}-{1}".format(key,t))
 
 
@@ -17,10 +16,9 @@ def callb1(key):
     t = time.time()
 
     if key != Key.enter:
-        #print('The key', key, 'hold', t)
         keyReleaseData.append("{0}-{1}".format(str(key), t))
     else:
-        return False		#stop detecting more key-presses
+        return False
 
 
 def digraphletters(keypress, keyrelease):
@@ -29,11 +27,13 @@ def digraphletters(keypress, keyrelease):
     y = [j + i for i, j in zip(keyReleaseLetter[1:], keyPressLetter[:-1])]
     return [''.join(e for e in string if e.isalnum()) for string in y]
 
+
 def digraphtime(keypress, keyrelease):
     keyPress = [float(times.split('-')[1]) for times in keypress]
     keyRelease = [float(times.split('-')[1]) for times in keyrelease]
 
     return [i - j for i, j in zip(keyRelease[1:], keyPress[:-1])]
+
 
 def backspaceKeys(keyPreRe):
     for index, keys in enumerate(keyPreRe):
@@ -60,7 +60,7 @@ def backspaceKeys(keyPreRe):
 
 
 def licz():
-    filepath = "./el.txt"
+    filepath = "./adam/el.txt"
 
     exam_data_file = open(filepath, 'r')
     exam_data1 = []
@@ -68,20 +68,13 @@ def licz():
     for line in exam_data_file:
         exam_data1.extend([float(i) for i in line.split()])
 
-    print(exam_data1)
-
-    print(np.mean(exam_data1))
-    print(np.std(exam_data1))
-
     mu = np.mean(exam_data1)
     sigma = np.std(exam_data1)
     return mu, sigma
 
-#text = ["Jakaka"]
-#TextDokumentowy =
-
 
 i=1
+score = 50
 meanlist= []
 for textlist in open('./textEXMPL.txt', 'r').readlines():
     print("Entry", i, "text: ")
@@ -110,17 +103,17 @@ for textlist in open('./textEXMPL.txt', 'r').readlines():
     #authenticate(keyPressData, keyReleaseData)
 
 print(meanlist)
-print(np.mean(meanlist))
-print(np.std(meanlist))
+srednia = np.mean(meanlist)
+sig = np.std(meanlist)
 
 mu, sigma = licz()
 
-# print(abs(mu - np.mean(s)) < 0.01)
-# print(abs(sigma - np.std(s, ddof=1)) < 0.01)
-#
-# count, bins, ignored = plt.hist(s, 30, density=True)
-# plt.plot(bins, 1/(sigma * np.sqrt(2 * np.pi)) *
-#              np.exp( - (bins - mu)**2 / (2 * sigma**2) ),
-#        linewidth=2, color='r')
-# plt.show()
+if srednia + sig > mu + sigma:
+    score += 1
+elif srednia - sig < mu - sigma:
+    score += 1
+
+print(score)
+
+
 
