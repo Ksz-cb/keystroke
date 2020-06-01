@@ -26,4 +26,4 @@ if wybor == 1:
             name = input("\n Podaj nazwe profilu: ")
 
     clear_screen()
-    exec(open("../test.py").read())
+    exec(open("../tworzeniemodelu.py").read())

@@ -2,9 +2,8 @@ import numpy as np
 import os
 
 
-def licz():
-    directory = './adam/'
-    print(directory)
+def licz(direct):
+    directory = './' + direct + '/'
     for file in os.listdir('./adam'):
         data_file = open(directory + file, 'r+')
         data1 = []
@@ -32,7 +31,11 @@ def licz():
         f.close()
 
 
-licz()
+user = input("Podaj nazwe profilu do czyszczenia danych: ")
+if os.path.isdir('./' + user):
+    licz(user)
+else:
+    print("Nie ma takiego profilu")
 
 
 
