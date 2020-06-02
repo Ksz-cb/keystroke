@@ -18,7 +18,7 @@ def licz(direct):
 
         data_file.truncate(0)
         data_file.close()
-        data1 = [i for i in data1 if mu - sigma < i < mu + sigma]
+        data1 = [i for i in data1 if mu - 2*sigma < i < mu + 2*sigma]
         print(data1)
 
         f = open(directory + file, "a")

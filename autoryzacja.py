@@ -1,5 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
 from pynput.keyboard import Key, Listener
 import time
 import os
@@ -52,25 +51,25 @@ def licz(digraph):
         for line in data_file:
             data1.extend([float(i) for i in line.split()])
 
-        mu = np.mean(data1)
-        sigma = np.std(data1)
+        maxi = np.max(data1)
+        mini = np.min(data1)
 
-        return mu, sigma
+        return maxi, mini
     except FileNotFoundError:
-        mu = 0
-        sigma = 0
-        return mu, sigma
+        maxi = 0
+        mini = 0
+        return maxi, mini
 
 
 def authenticate(digraphtime, digraphletters):
     global score
     for i in range(len(digraphtime)):
-        mu, sigma = licz("{}.txt".format(digraphletters[i]))
-        if mu == 0 and sigma == 0:
+        maxi, mini = licz("{}.txt".format(digraphletters[i]))
+        if maxi == 0 and mini == 0:
             continue
         else:
-            if mu - 2*sigma < digraphtime[i] < mu + 2*sigma:
-                score += 2
+            if mini <= digraphtime[i] <= maxi:
+                score += 1
             else:
                 score -= 10
             print(score)
