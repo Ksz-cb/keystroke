@@ -22,7 +22,7 @@ if wybor == 1:
             os.chdir(name)
             break
         except FileExistsError:
-            print ("Istnieje profil o tej nazwie, wybierz inna: ")
+            print("Istnieje profil o tej nazwie, wybierz inna: ")
             name = input("\n Podaj nazwe profilu: ")
 
     clear_screen()

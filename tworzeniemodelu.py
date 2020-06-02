@@ -2,6 +2,8 @@ from pynput.keyboard import Key, Listener
 import time
 import os
 
+#os.chdir("TESTTESTTEST")
+
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
 
@@ -62,7 +64,7 @@ def makefile(keypress, keyrelease):
 
 
 i=1
-for textlist in open('./textEXMPL.txt', 'r').readlines():
+for textlist in open('../textEXMPL.txt', 'r').readlines():
     print("Entry", i, "text: ")
     print(textlist)
     keyPressData = []
@@ -73,10 +75,10 @@ for textlist in open('./textEXMPL.txt', 'r').readlines():
     i += 1
     x=''
     clear_screen()
-    print(keyPressData)
-    print(keyReleaseData)
-    print(digraphtime(keyPressData, keyReleaseData))
-    print(digraphletters(keyPressData, keyReleaseData))
+    #print(keyPressData)
+    #print(keyReleaseData)
+    #print(digraphtime(keyPressData, keyReleaseData))
+    #print(digraphletters(keyPressData, keyReleaseData))
     makefile(keyPressData, keyReleaseData)
 
 

@@ -4,7 +4,7 @@ import os
 
 def licz(direct):
     directory = './' + direct + '/'
-    for file in os.listdir('./adam'):
+    for file in os.listdir(user):
         data_file = open(directory + file, 'r+')
         data1 = []
         for line in data_file:
